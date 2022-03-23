@@ -5,4 +5,4 @@ void login();
 
 void logout();
 
-void register();
+void reg();

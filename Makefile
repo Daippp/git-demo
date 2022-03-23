@@ -1,5 +1,5 @@
 all : main.o usr.o book_management.o
-	gcc main.o usr.o book_management.o -o main
+	gcc main.o usr.o book_management.o -o lib
 main.o : main.c
 	gcc main.c -c -o main.o
 usr.o : usr.c

@@ -51,3 +51,39 @@ BookList find_book_by_year (unsigned int year){
     BookList ret;
     return ret;
 }
+/*
+void BookList display_all (){
+    return;
+}
+*/
+void displayone (Book b){
+    return;
+}
+
+void displayall(){
+    return;
+}
+
+void search_for_books(){
+
+}
+
+void borrowbook(){
+
+}
+
+void addbook(){
+
+}
+
+void returnbook(){
+
+}
+
+void removebook(){
+
+}
+
+void searchbook(){
+
+}
