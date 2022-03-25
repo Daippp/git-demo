@@ -3,11 +3,15 @@
 #include<stdlib.h>
 #include"book_management.h"
 #include"usr.h"
+#include"loan.h"
 
-char username[100];
+char usrname[100];
+char usrfile[100]={"..//data//usr.txt"};
+char bookfile[100]={"..//data//books.txt"};
+char loanfile[100]={"..//data//loans.txt"};
 int stat=0;
-BookList books;
-
+BookList bk;
+extern void login();
 void numcat(char* s,int x){
     int len=strlen(s);
     s[len]=x+'0';
@@ -29,24 +33,28 @@ void print_file(char filename[]){
 
 int print_except_number(char filename[],int minnum,int maxnum,char tip[]){
     int ret=-1,fst=1;
+    char input[100];
     do{
         if(!fst){
             printf("%s",tip);
         }
         else    fst=0;
         print_file(filename);
-        scanf("%d",&ret);
+        gets(input);
+        //scanf("%s",input);
+        ret=stoi(input);
     }while(ret<minnum||ret>maxnum);
     
-    return 0;
+    return ret;
 }
 
+int main(int argc,char argv[]){
 
 
-int main(){
     FILE* store;
-    FILE* load=fopen("..\\data\\books.txt","r");
+    FILE* load=fopen(bookfile,"r");
     load_books(load);
+    loadloan();
     fclose(load);
 
 
@@ -58,9 +66,8 @@ int main(){
 
         //get user input option
         int option;
+        if(stat!=0) printf("Logged in as: %s",usrname);
         option = print_except_number(filename,1,5,"\nSorry, the option you entered was invalid, please try again.\n");
-        
-        
         switch(option){
             case 1:
                 if(stat==0){
@@ -93,13 +100,19 @@ int main(){
                 }
                 break;
             case 4:
-                displayall();
+                displayall(bk);
                 break;
             case 5:
-                store=fopen("..\\data\\books.txt","w");
-                store_books(store);
-                fclose(store);
-                return 0;
+                printf("Thank you for using the Library!\n");
+                if(stat==0){
+                    save_loan();
+                    store=fopen("..\\data\\books.txt","w");
+                    store_books(store);
+                    fclose(store);
+                    return 0;
+                }
+                else stat=0;
+                
         }
     }
 
