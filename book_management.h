@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /*You can extend the structs (Book and BookList) defined in this head file;
   However, you may not change the function prototypes. 
@@ -23,6 +24,8 @@ typedef struct _BookList {
 	 Book* list; // pointer to a list of struct Book.
 	 unsigned int length; // number of elements in the (Book*) List 
 }BookList;
+int stoi(char s[]);
+void initbook(Book* b,int id,char* title,char* authors,int year,int copies);
 
 
 //saves the database of books in the specified file
@@ -60,20 +63,18 @@ BookList find_book_by_author (const char *author);
 //list is the NULL pointer.
 BookList find_book_by_year (unsigned int year);
 
-void displayall ();
+void displayall (BookList bk);
 
-void displayone (Book b);
+void displayone (Book *b);
 
 void search_for_books();
 
-void borrowbook();
-
 void addbook();
 
-void returnbook();
 
 void removebook();
 
 void searchbook();
+
 
 #endif
