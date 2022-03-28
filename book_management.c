@@ -3,6 +3,8 @@ extern BookList bk;
 int cnt=0;
 int booksum=0;
 int print_except_number(char filename[],int minnum,int maxnum,char tip[]);
+
+//convert string to int
 int stoi(char s[]){
     int ret=0;
     int len=strlen(s);
@@ -14,6 +16,7 @@ int stoi(char s[]){
     return ret;
 }
 
+//init the book node
 void initbook(Book* b,int id,char* title,char* authors,int year,int copies){
     b->id=id;
     b->title = malloc(sizeof(char)*(strlen(title)-1));
@@ -56,7 +59,7 @@ int load_books(FILE *file){
         fscanf(file,"%d%s%s%d%d",&id,title,author,&year,&copies);
         //fgets(cop,255,file);
         //copies=stoi(cop);
-        printf("%d\n",cnt);
+        //printf("%d\n",cnt);
         fgetc(file);
         if(id>cnt)  cnt=id;
         if(id<0||year<0||copies<0){
@@ -136,8 +139,8 @@ BookList find_book_by_title (const char *title){
             strcpy(r->title,p->title);
             r->authors=malloc(sizeof(char)*(strlen(p->authors)+1));
             strcpy(r->authors,p->authors);
-            p=p->next;
         }
+            p=p->next;
     }
     return ret;
 }
@@ -172,8 +175,8 @@ BookList find_book_by_author (const char *author){
             strcpy(r->title,p->title);
             r->authors=malloc(sizeof(char)*(strlen(p->authors)+1));
             strcpy(r->authors,p->authors);
-            p=p->next;
         }
+            p=p->next;
     }
     return ret;
 }
@@ -186,6 +189,7 @@ BookList find_book_by_year (unsigned int year){
     Book *p=bk.list->next;
     while(p){
         if(p->year==year){
+            printf("find\n");
             r->next=malloc(sizeof(Book));
             r=r->next;
             r->next=NULL;
@@ -197,8 +201,8 @@ BookList find_book_by_year (unsigned int year){
             strcpy(r->title,p->title);
             r->authors=malloc(sizeof(char)*(strlen(p->authors)+1));
             strcpy(r->authors,p->authors);
-            p=p->next;
         }
+        p=p->next;
     }
     return ret;
 }
@@ -227,17 +231,17 @@ void searchbook(){
     switch(option){
         case 1:
             printf("Please enter title: ");
-            scanf("%s",key);
+            gets(key);
             h=find_book_by_title(key);
             break;
         case 2:
             printf("Please enter author: ");
-            scanf("%s",key);
+            gets(key);
             h=find_book_by_author(key);
             break;
         case 3:
             printf("Please enter year: ");
-            scanf("%s",key);
+            gets(key);
             t=stoi(key);
             if(t==-1){
                 printf("\nInvalid key.\n");
@@ -247,6 +251,10 @@ void searchbook(){
             break;
         case 4:
             return;
+    }
+    if(h.list->next==NULL) {
+        printf("No such book.\n");
+        return ;
     }
     displayall(h);
     return;
@@ -258,6 +266,7 @@ void addbook(){
     char title[100],author[100],cop[100];
     int len=0;
     
+    //input
     printf("Enter the title of the book you wish to add: ");
     gets(title);
     printf("Enter the author of the book you wish to add: ");
@@ -300,6 +309,7 @@ void removebook(){
     Book *q=bk.list;
     while(p){
         if(p->id==tmp){
+            booksum--;
             q->next=p->next;
             free(p);
         }
