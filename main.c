@@ -12,12 +12,15 @@ char loanfile[100]={"..//data//loans.txt"};
 int stat=0;
 BookList bk;
 extern void login();
+
+//append a int to string
 void numcat(char* s,int x){
     int len=strlen(s);
     s[len]=x+'0';
     s[len+1]='\0';
 }
 
+//read file and print to screen
 void print_file(char filename[]){
     FILE *prt=fopen(filename,"r");
     char buff[255];
@@ -48,8 +51,13 @@ int print_except_number(char filename[],int minnum,int maxnum,char tip[]){
     return ret;
 }
 
-int main(int argc,char argv[]){
-
+int main(int argc,char* argv[]){
+    if(argc<3){
+        printf("You haven't enter enough arguments.Use default file.\n");
+    }
+    if(argc>1)  strcpy(bookfile,argv[1]);
+    if(argc>2)  strcpy(usrfile,argv[2]);
+    if(argc>3)  strcpy(loanfile,argv[3]);
 
     FILE* store;
     FILE* load=fopen(bookfile,"r");
@@ -68,6 +76,7 @@ int main(int argc,char argv[]){
         int option;
         if(stat!=0) printf("Logged in as: %s",usrname);
         option = print_except_number(filename,1,5,"\nSorry, the option you entered was invalid, please try again.\n");
+        fflush(stdin);
         switch(option){
             case 1:
                 if(stat==0){
@@ -92,12 +101,7 @@ int main(int argc,char argv[]){
                 }
                 break;
             case 3:
-                if(stat==0){
-                    reg();
-                }
-                else{
-                    searchbook();
-                }
+                searchbook();
                 break;
             case 4:
                 displayall(bk);
@@ -106,9 +110,10 @@ int main(int argc,char argv[]){
                 printf("Thank you for using the Library!\n");
                 if(stat==0){
                     save_loan();
-                    store=fopen("..\\data\\books.txt","w");
+                    store=fopen(bookfile,"w");
                     store_books(store);
                     fclose(store);
+                    printf("Goodbye!");
                     return 0;
                 }
                 else stat=0;
