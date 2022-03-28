@@ -15,6 +15,7 @@ void login(){
     printf("Please enter your password: ");
     gets(in2);
 
+    //find user in file
     FILE *f=fopen(usrfile,"r");
     if(f){
         num=0;
@@ -48,6 +49,7 @@ void logout(){
 }
 
 void reg(){
+    //register
     char in1[100],in2[100];
     printf("\nPlease enter a username: ");
     gets(in1);
@@ -73,8 +75,6 @@ void reg(){
         }
     }
     printf("\nRegister sucessfully\n");
-    stat=1;
-    strcpy(usrname,in1);
     f=fopen(usrfile,"w");
     
     for(int i=0;i<num;i++){
