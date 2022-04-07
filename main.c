@@ -34,7 +34,15 @@ void print_file(char filename[]){
     return;
 }
 
-int print_except_number(char filename[],int minnum,int maxnum,char tip[]){
+const char str[5][1000]={
+	"\nPlease choose an option:\n1) Register an account\n2) Login\n3) Search for Books\n4) Display all books\n5) Quit\n  option: ",
+	"\nPlease choose an option:\n1) Borrow a book\n2) Return a book\n3) Search for books\n4) Display all books\n5) Log out\n Option: ",
+	"\nPlease choose an option:\n1) Add a book\n2) Remove a book\n3) Search for books\n4) Display all books\n5) Log out\n Option: ",
+	"Please choose an option:\n1) Find books by title\n2) Find books by author\n3) Find books by year\n4) Return to previous menu\n Option: "
+};
+
+int print_except_number(int id,int minnum,int maxnum,char tip[]){
+	
     int ret=-1,fst=1;
     char input[100];
     do{
@@ -42,7 +50,7 @@ int print_except_number(char filename[],int minnum,int maxnum,char tip[]){
             printf("%s",tip);
         }
         else    fst=0;
-        print_file(filename);
+        printf("%s",str[id]);
         gets(input);
         //scanf("%s",input);
         ret=stoi(input);
@@ -60,22 +68,22 @@ int main(int argc,char* argv[]){
     if(argc>3)  strcpy(loanfile,argv[3]);
 
     FILE* store;
-    FILE* load=fopen(bookfile,"r");
+    /*FILE* load=fopen(bookfile,"r");
     load_books(load);
     loadloan();
     fclose(load);
-
+*/
 
     while(1){
         //set filename of tips
-        char filename[100]="..\\display\\main";
+       /* char filename[100]="..\\display\\main";
         numcat(filename,stat);
-        strcat(filename,".txt");
+        strcat(filename,".txt");*/
 
         //get user input option
         int option;
         if(stat!=0) printf("Logged in as: %s",usrname);
-        option = print_except_number(filename,1,5,"\nSorry, the option you entered was invalid, please try again.\n");
+        option = print_except_number(stat,1,5,"\nSorry, the option you entered was invalid, please try again.\n");
         fflush(stdin);
         switch(option){
             case 1:
