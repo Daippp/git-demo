@@ -12,7 +12,7 @@ public class Guess {
 	// TODO: Implement constructor with int parameter
 	public Guess(int num) {
 		if (num < 1 || num > 6) {
-			throw new GameException("The value of this parameter is not in the allowed range��");
+			throw new GameException("The value of this parameter is not in the allowed range.");
 		}
 		this.guessNumber = num;
 	}
@@ -27,7 +27,7 @@ public class Guess {
 			}
 		}
 		if (counter != 5 || num < 1 || num > 6) {
-			throw new GameException("The value of this parameter is not in the allowed range��");
+			throw new GameException("The value of this parameter is not in the allowed range.");
 		}
 		this.guessNumber = num;
 		this.chosenWord = word.toUpperCase();

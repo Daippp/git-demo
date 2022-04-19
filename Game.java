@@ -1,7 +1,6 @@
 package comp1721.cwk1;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
@@ -14,7 +13,7 @@ public class Game {
 	// TODO: Implement constructor with String parameter
 	public Game(String filename) throws IOException {
 		WordList w = new WordList(filename);
-		LocalDate start = LocalDate.of(2018, 2, 12);
+		LocalDate start = LocalDate.of(2021, 6, 19);
 		LocalDate now = LocalDate.now();
 		int i = (int) (now.toEpochDay() - start.toEpochDay());
 		this.gameNumber = i;
@@ -34,7 +33,7 @@ public class Game {
 	public void play() {
 		int j = 0;
 		System.out.print("\n");
-		System.out.println("WORDLE "+ this.gameNumber);
+		System.out.println("WORDLE " + this.gameNumber);
 		System.out.print("\n");
 		for (int i = 1; i < 7; i++) {
 			System.out.print("Enter guess (" + i + "/6): ");
@@ -42,7 +41,7 @@ public class Game {
 			Guess g = new Guess(i, Guess.input);
 			String str1 = g.compareWith(this.target);
 			System.out.println(str1);
-			list = insert(list, str1);
+			list[i-1] =str1;
 			if (g.matches(this.target)) {
 				j = i;
 				break;
@@ -53,7 +52,7 @@ public class Game {
 		if (j == 1) {
 			System.out.println("Superb - Got it in one!");
 		}
-		if (j >= 2 || j <= 5) {
+		if (j >= 2 && j <= 5) {
 			System.out.println("Well done!");
 		}
 		if (j == 6) {
@@ -71,14 +70,15 @@ public class Game {
 	}
 
 	// TODO: Implement save() method, with a String parameter
-	public void save(String filename) throws FileNotFoundException {
+	public void save(String filename) throws IOException {
 		File file = new File(filename);
-		try (PrintWriter output = new PrintWriter(file)) {
-			for (int i = 1; i < 7; i++) {
-				String str2 = list[i];
-				output.println(str2);
-			}
+		PrintWriter output1 = new PrintWriter(file);
+		int i = 0;
+		while(list[i] != null && i<6){
+			String str2 = list[i];
+			output1.println(str2);
+			i++;
 		}
-		;
+		output1.close();
 	}
 }
