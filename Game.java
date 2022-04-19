@@ -41,11 +41,14 @@ public class Game {
 			Guess g = new Guess(i, Guess.input);
 			String str1 = g.compareWith(this.target);
 			System.out.println(str1);
-			list[i-1] =str1;
+			list = insert(list, str1);
+
 			if (g.matches(this.target)) {
 				j = i;
 				break;
 			}
+			// If the match method cannot be satisfied, 7 needs to be assigned to j to
+			// indicate that the game has failed
 			j = 7;
 
 		}
@@ -73,12 +76,10 @@ public class Game {
 	public void save(String filename) throws IOException {
 		File file = new File(filename);
 		PrintWriter output1 = new PrintWriter(file);
-		int i = 0;
-		while(list[i] != null && i<6){
+		for (int i = 1; i < 7; i++) {
 			String str2 = list[i];
 			output1.println(str2);
-			i++;
 		}
-		output1.close();
+		output1.close();//Be careful to close the file
 	}
 }
